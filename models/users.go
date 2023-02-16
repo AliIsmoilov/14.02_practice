@@ -19,3 +19,12 @@ type Friend struct{
 	Email string `json:"email"`
 	Phone_number string `json:"phone_number"`
 }
+
+type UpdateUser struct {
+	Id string `json:"id"`
+	First_name string `json:"first_name"`
+	Last_name string `json:"last_name"`
+	Gender string `json:"gender"`
+	Adress Adress `json:"adress"`
+	Friends []Friend `json:"friends"`
+}

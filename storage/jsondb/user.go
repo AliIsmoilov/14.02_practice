@@ -1,4 +1,4 @@
-package storage
+package jsondb
 
 import (
 	"encoding/json"
@@ -14,6 +14,8 @@ type userRepo struct {
 	fileName string
 	file     *os.File
 }
+
+
 
 func NewUserRepo(fileName string, file *os.File) *userRepo {
 	return &userRepo{
@@ -88,7 +90,7 @@ func (u *userRepo) Update(id string, UpdateUser models.User)error{
 }
 
 
-func (u *userRepo) GerById(id string) (found_user models.User, err error){
+func (u *userRepo) GetById(id string) (found_user models.User, err error){
 
 	var users []models.User
 
@@ -160,3 +162,11 @@ func (u *userRepo) Delete(id string) (error){
 
 	return nil
 }
+
+func (u *userRepo) GetUserPosts() {
+	
+	
+}
+
+
+

@@ -8,7 +8,7 @@ import(
 
 func (c *Controller) GetAll(search string) ([]models.User, error){
 
-	users, err := c.store.User.GetAll(search)
+	users, err := c.store.User().GetAll(search)
 	
 	if err != nil{
 		return nil, err
@@ -17,9 +17,9 @@ func (c *Controller) GetAll(search string) ([]models.User, error){
 	return users, nil
 }
 
-func (c *Controller) Update(id string, updateUser models.User)error{
+func (c *Controller) Update(id string, UpdateUser models.User)error{
 
-	err := c.store.User.Update(id, updateUser)
+	err := c.store.User().Update(id, UpdateUser)
 
 	if err != nil{
 		return err
@@ -30,7 +30,7 @@ func (c *Controller) Update(id string, updateUser models.User)error{
 
 func (c *Controller) GetById(id string) (found_user models.User, err error){
 
-	found_user, err =  c.store.User.GerById(id)
+	found_user, err =  c.store.User().GetById(id)
 
 	if err != nil{
 		return found_user, err
@@ -42,7 +42,7 @@ func (c *Controller) GetById(id string) (found_user models.User, err error){
 
 func (c *Controller) Delete(id string) error{
 
-	err := c.store.User.Delete(id)
+	err := c.store.User().Delete(id)
 
 	return err
 }
