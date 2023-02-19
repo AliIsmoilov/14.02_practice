@@ -48,6 +48,7 @@ func (s *shopCartRepo) AddShopCart(req *models.AddShopCart) (models.ShopCart, er
 		ProductId: req.ProductId,
 		UserId:    req.UserId,
 		Count:     req.Count,
+		Status: false,
 	}
 	carts = append(carts, newShopCart)
 
@@ -126,9 +127,47 @@ func (s *shopCartRepo) GetUserShopCarts(req *models.UserPrimaryKey) ([]models.Sh
 
 	for _, v := range carts {
 		if v.UserId == req.Id {
-			userShopCarts = append(userShopCarts, v)
+			if v.Status != true{
+				userShopCarts = append(userShopCarts, v)
+			}
+			
 		}
 	}
 
 	return userShopCarts, nil
+}
+
+func (s *shopCartRepo) UpdateProductStatus(id string) error{
+
+	carts := []models.ShopCart{}
+
+	// Read data from file
+	data, err := ioutil.ReadFile(s.fileName)
+	if err != nil {
+		return err
+	}
+
+	// parse json data
+	err = json.Unmarshal(data, &carts)
+	if err != nil {
+		return err
+	}
+
+	for ind, cart := range carts{
+		if cart.UserId == id{
+			carts[ind].Status = true
+		}
+	} 
+	
+	body, err := json.MarshalIndent(carts, "", "   ")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(s.fileName, body, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

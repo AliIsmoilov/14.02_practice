@@ -7,6 +7,7 @@ type StorageI interface {
 	User() UserRepoI
 	Product() ProductRepoI
 	ShopCart() ShopCartRepoI
+	Komissiya() KomissiyaRepoI
 }
 
 type UserRepoI interface {
@@ -29,4 +30,10 @@ type ShopCartRepoI interface {
 	AddShopCart(req *models.AddShopCart) (models.ShopCart, error)
 	RemoveShopCart(req *models.RemoveShopCart) (models.ShopCart, error)
 	GetUserShopCarts(req *models.UserPrimaryKey) ([]models.ShopCart, error)
+	UpdateProductStatus(id string) error
+}
+
+type KomissiyaRepoI interface {
+	CreateKomissiya(req *models.Komissiya) (err error)
+	UpdateCommision(req models.Komissiya) (err error)
 }

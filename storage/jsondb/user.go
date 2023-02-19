@@ -189,3 +189,8 @@ func (u *userRepo) DeleteUser(req *models.UserPrimaryKey) (models.User, error) {
 
 	return deletedUser, nil
 }
+
+// func (u *userRepo) SendMoney(req *models.ExchangeMoney) (err error){
+
+
+// }

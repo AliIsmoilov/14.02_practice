@@ -2,6 +2,7 @@ package controller
 
 import (
 	"app/models"
+	"errors"
 )
 
 func (c *Controller) CreateUser(req *models.CreateUser) (id string, err error) {
@@ -59,6 +60,10 @@ func (c *Controller) WithdrawUserBalance(id string, balance float64) error {
 		return err
 	}
 
+	if user.Balance < balance{
+		return errors.New("Not enough money")
+	}
+
 	user.Balance = user.Balance - balance
 
 	_, err = c.store.User().UpdateUser(&models.UpdateUser{
@@ -66,11 +71,66 @@ func (c *Controller) WithdrawUserBalance(id string, balance float64) error {
 		Name:    user.Name,
 		Surname: user.Surname,
 		Balance: user.Balance,
+		
 	})
 
 	if err != nil {
 		return err
 	}
 
+	err = c.store.ShopCart().UpdateProductStatus(id)
+
+	if err != nil{
+		return err
+	}
 	return nil
+}
+
+func (c *Controller) SendMoney(req *models.ExchangeMoney) (err error){
+
+	sender, err := c.store.User().GetUserById(&models.UserPrimaryKey{req.SenderID})
+	if err != nil{
+		return err
+	}
+
+	reciver, err := c.store.User().GetUserById(&models.UserPrimaryKey{req.RecieverID})
+	if err != nil{
+		return err
+	}
+
+	if sender.Balance < req.Summa + (req.Summa*10/100){
+		return errors.New("Not enough money")
+	}
+
+	_, err = c.store.User().UpdateUser(&models.UpdateUser{
+		Id: sender.Id,
+		Name: sender.Name,
+		Surname: sender.Surname,
+		Balance: sender.Balance - (req.Summa + req.Summa*10/100),
+	}) 
+	
+	if err != nil{
+		return err
+	}
+
+	_, err = c.store.User().UpdateUser(&models.UpdateUser{
+		Id:  reciver.Id,
+		Name: reciver.Name,
+		Surname: reciver.Name,
+		Balance: reciver.Balance + req.Summa,
+	})
+
+	if err != nil{
+		return err
+	}
+
+	err = c.store.Komissiya().UpdateCommision(models.Komissiya{Balance: req.Summa*10/100})
+	
+	if err != nil{
+		return err
+	}
+
+
+	return nil
+	
 }

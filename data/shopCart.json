@@ -1,14 +1,23 @@
 [
    {
-      "id": "3459bb3b-16ed-4e81-8ce6-533a3eec1814",
-      "product_id": "ec529cd6-dbb8-4982-a984-017b6a042378",
+      "id": "0078a382-3d44-4a66-9fb4-b4c9ee379742",
+      "product_id": "48b934e9-ed15-4779-8d0d-e45c61c7a089",
       "user_id": "c6772cfd-f356-499d-a03b-75e76630b719",
-      "count": 6
+      "count": 2,
+      "status": true
    },
    {
-      "id": "08cea473-c942-4882-b3af-92f9dabaae51",
-      "product_id": "ec529cd6-dbb8-4982-a984-017b6a042378",
+      "id": "c195f2bd-6c46-4f71-bef1-cee55e10124d",
+      "product_id": "48b934e9-ed15-4779-8d0d-e45c61c7a089",
       "user_id": "c6772cfd-f356-499d-a03b-75e76630b719",
-      "count": 6
+      "count": 2,
+      "status": true
+   },
+   {
+      "id": "7c52f047-151d-4653-84c3-deba4b8e95d6",
+      "product_id": "48b934e9-ed15-4779-8d0d-e45c61c7a089",
+      "user_id": "c6772cfd-f356-499d-a03b-75e76630b719",
+      "count": 6,
+      "status": false
    }
 ]
